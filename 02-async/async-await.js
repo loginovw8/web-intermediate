@@ -17,13 +17,23 @@ someActionAlternate().then((res) => console.log(res));
 // Ключевое слово await заставит интерпретатор JavaScript ждать до тех пор, пока промис справа от await не выполнится
 
 async function someActionAwait() {
-    let promise = new Promise((resolve, reject) => {
-        setTimeout(() => resolve("done await"), 1000);
-    });
+	let promise = new Promise((resolve, reject) => {
+		setTimeout(() => resolve(20), 1000);
+	});
 
-    let result = await promise;
+	let result = await promise;
 
-    console.log(result);
+	console.log(10 + result);
+
+	return 10 + result;
 }
 
-someActionAwait();
+//(async () => {
+	//let promise = new Promise((resolve, reject) => {
+		//setTimeout(() => resolve(20), 1000);
+	//});
+
+	//let result = await promise;
+
+	//console.log(10 + result);
+//})();
