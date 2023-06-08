@@ -19,6 +19,9 @@ connection.connect((err) => {
     }
 });
 
+// Парсинг json
+app.use(express.json())
+
 // Путь к директории файлов ресурсов (css, js, images)
 app.use(express.static('public'));
 

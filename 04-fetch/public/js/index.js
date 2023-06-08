@@ -13,3 +13,15 @@ fetch('/items')
             console.log('Items loaded.');
         }
     );
+
+// рекурсия!
+
+// fetch('/items', {
+//     method: 'POST',
+//     headers: {
+//         "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//         message: 'hello'
+//     })
+// })
