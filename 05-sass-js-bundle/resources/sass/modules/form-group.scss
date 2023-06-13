@@ -1,0 +1,11 @@
+.form-group {
+    margin-bottom: 20px;
+
+    &__label {
+        border-radius: 8px;
+    }
+
+    &__input {
+        padding: 7px;
+    }
+}

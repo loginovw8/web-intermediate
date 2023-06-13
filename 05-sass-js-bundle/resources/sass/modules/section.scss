@@ -5,6 +5,10 @@
     border: 2px solid blue;
     background-color: lightcyan;
 
+    @include breakpoint('small') {
+        margin-bottom: 20px;
+    }
+
     &__image {
         border-radius: 8px;
     }

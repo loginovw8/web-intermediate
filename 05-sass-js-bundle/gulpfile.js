@@ -18,14 +18,14 @@ let paths = {
 };
 
 function clean() {
-    return del(['src']);
+    return del([paths.styles.dest, paths.scripts.dest]);
 }
 
 function styles() {
     return gulp.src(paths.styles.src)
-        .pipe(sass({includePaths: ['node_modules'], outputStyle: 'compressed'}))
-        .pipe(cleancss({level: {1: {specialComments: 0}}}))
-        .pipe(rename({suffix: '.min'}))
+        .pipe(sass({ includePaths: ['node_modules'], outputStyle: 'compressed' }))
+        .pipe(cleancss({ level: { 1: { specialComments: 0 } } }))
+        .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(paths.styles.dest));
 }
 
@@ -33,7 +33,7 @@ function scripts() {
     return gulp.src(paths.scripts.src)
         .pipe(named())
         .pipe(webpack())
-        .pipe(rename({suffix: '.min'}))
+        .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(paths.scripts.dest));
 }
 
