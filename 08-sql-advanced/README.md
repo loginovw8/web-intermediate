@@ -2,28 +2,30 @@
 
 ## Индексы
 
-Простыми словами индекс, создается на поле в таблице по которому происходит поиск. Тем самым ускоряя скорость поиска в разы.
+Простыми словами индекс, создается на поле в таблице по которому происходит 
+поиск. Тем самым ускоряя скорость поиска в разы.
 
 Пример таблицы:
 
-    CREATE TABLE Clients (
-        id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    CREATE TABLE clients (
+        id INT(11) AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(30) NOT NULL,
         email VARCHAR(50),
         phone VARCHAR(12)
-    )
+    );
 
 Поле id - уже имеет индекс в качестве первичного ключа.
 
 Если вам нужен поиск по имени полю "name", такого типа:
 
-    SELECT * FROM `Clients` WHERE `name` = "Вася"
+    SELECT * FROM clients WHERE name = "Иван";
 
-Тогда есть смысл добавить индекс по данному полю "name", что значительно ускорит выборку.
+Тогда есть смысл добавить индекс по данному полю "name", что значительно 
+ускорит выборку.
 
 SQL запрос создания индекса:
 
-    CREATE INDEX `my_index_name` ON `Clients` (`name`) USING BTREE;
+    CREATE INDEX my_index_name ON clients (name) USING BTREE;
 
 Просмотр индексов у таблицы:
 
@@ -33,9 +35,13 @@ SQL запрос создания индекса:
 
 * Seq_in_index - позиция столбца в индексе
 * Collation - набор правил для сравнения символов
-* Cardinality - уникальность содержимого конктретной колонки. Чем меньше значения параметра, тем больше дубликатов в конечной выборке
-* Sub_part - префикс индекса. Если значение равно null, то весь столбец проиндексирован
-* Packed - используется для исключения общих префиксов в строковых ключах (В таблице, в которой хранятся URL-адреса, для MySQL было бы пустой тратой дискового пространства хранить «http://» в каждом узле B-дерева)
+* Cardinality - уникальность содержимого конктретной колонки. Чем меньше 
+значения параметра, тем больше дубликатов в конечной выборке
+* Sub_part - префикс индекса. Если значение равно null, то весь столбец 
+проиндексирован
+* Packed - используется для исключения общих префиксов в строковых ключах 
+(В таблице, в которой хранятся URL-адреса, для MySQL было бы пустой тратой 
+дискового пространства хранить «http://» в каждом узле B-дерева)
 * Expression - поддержка функциональных ключевых частей
 
 ## Типы данных
@@ -72,13 +78,13 @@ SQL запрос создания индекса:
 
 ### LEFT JOIN
 
-    SELECT Customers.CustomerName, Orders.OrderID
-    FROM Customers
-    LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
-    ORDER BY Customers.CustomerName;
+    SELECT customers.customer_name, orders.order_id
+    FROM customers
+    LEFT JOIN orders ON customers.customer_id = orders.customer_id
+    ORDER BY customers.customer_name;
 
 ### Date Between
 
     SELECT *
-    FROM `objects`
+    FROM objects
     WHERE (date_field BETWEEN '2010-01-30' AND '2010-09-29');
