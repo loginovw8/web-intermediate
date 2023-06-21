@@ -72,3 +72,10 @@
     +----+--------+  | 3       | 1      |
                      | 3       | 2      |
                      +---------+--------+
+
+Получение данных о документах определенного пользователя. Конструкция WHERE 
+column IN
+
+    SELECT * FROM documents WHERE id IN (
+        SELECT doc_id WHERE user_id=1
+    );
