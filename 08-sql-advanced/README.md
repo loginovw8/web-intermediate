@@ -62,6 +62,7 @@ SQL запрос создания индекса:
 
     CREATE TABLE parent (
         id INT NOT NULL,
+        name VARCHAR(255) NOT NULL,
         PRIMARY KEY (id)
     );
 
@@ -78,10 +79,20 @@ SQL запрос создания индекса:
 
 ### LEFT JOIN
 
-    SELECT customers.customer_name, orders.order_id
-    FROM customers
-    LEFT JOIN orders ON customers.customer_id = orders.customer_id
-    ORDER BY customers.customer_name;
+    CREATE TABLE items (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(255),
+        category_id INT
+    );
+
+    CREATE TABLE categories (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        name VARCHAR(255) 
+    );
+
+    SELECT items.id, items.name, categories.name AS category_name
+    FROM items
+    LEFT JOIN categories ON items.category_id = categories.id;
 
 ### Date Between
 
