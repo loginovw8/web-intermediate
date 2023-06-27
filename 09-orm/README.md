@@ -1,39 +1,39 @@
 # ORM
 
-npm install prisma
+Set up a new Prisma project
 
-npx prisma
+    npx prisma init
 
-npx prisma init
+Define Prisma schema
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  content   String?
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
-}
+    model Item {
+        id          Int       @id @default(autoincrement())
+        title       String    @db.VarChar(255)
+        image       String    @db.VarChar(255)
+        created_at  DateTime  @default(now())
+        updated_at  DateTime  @default(now())
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
-}
+        @@map("items")
+    }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
-}
+Create migrations from Prisma schema and apply them to the database
 
-npx prisma migrate dev --name init
+    npx prisma migrate dev 
 
-npm install @prisma/client
+Generate new migration and apply to the database
+
+    npx prisma migrate dev --name add-description
+
+Delete and recreate the database
+
+    npx prisma migrate reset
+
+Status
+
+    npx prisma migrate status
+
+Apply pending migrations and create the database if it does not exist
+
+    npx prisma migrate deploy
 
 https://github.com/prisma/prisma-examples/blob/latest/javascript/rest-express/src/index.js
