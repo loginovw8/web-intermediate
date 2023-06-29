@@ -24,10 +24,36 @@ app.listen(3000);
  * Маршруты
  */
 app.get("/", async (req, res) => {
-    const items = await prisma.item.findMany();
+    const items = await prisma.item.findMany({
+        include: {
+            location: true,
+        }
+    });
 
     res.render("home", {
         items: items,
+    });
+});
+
+app.get("/items/:id", async (req, res) => {
+    const { id } = req.params;
+
+    const item = await prisma.item.findFirst({
+        where: {
+            id: Number(id),
+        },
+        include: {
+            location: true,
+            categories: {
+                include: {
+                    category: true,
+                }
+            },
+        }
+    });
+
+    res.render("item", {
+        item: (item) ? item : {},
     });
 });
 
@@ -38,6 +64,17 @@ app.post("/store", async (req, res) => {
         data: {
             title,
             image,
+        }
+    });
+
+    res.redirect("/");
+});
+
+app.get('/example-m-n', async (req, res) => {
+    await prisma.ItemRelCategory.create({
+        data: {
+            item_id: Number(2),
+            category_id: Number(1),
         }
     });
 
