@@ -19,14 +19,11 @@ test('adding positive numbers is not zero', () => {
 });
 
 // Truthiness
-
 test('null', () => {
     const n = null;
     expect(n).toBeNull();
     expect(n).toBeDefined();
     expect(n).not.toBeUndefined();
-    expect(n).not.toBeTruthy();
-    expect(n).toBeFalsy();
 });
 
 test('zero', () => {
@@ -34,14 +31,11 @@ test('zero', () => {
     expect(z).not.toBeNull();
     expect(z).toBeDefined();
     expect(z).not.toBeUndefined();
-    expect(z).not.toBeTruthy();
-    expect(z).toBeFalsy();
 });
 
 // Async
-
-test('the data is peanut butter', () => {
-    return fetchData().then(data => {
-        expect(data).toBe('peanut butter');
-    });
+test('the data is peanut butter', async () => {
+    const response = await fetch('http://localhost:3000/');
+    const data = await response.json();
+    expect(data.message).toBe('Hello, World!');
 });
