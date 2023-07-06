@@ -1,3 +1,4 @@
+const axios = require('axios');
 const sum = require('./sum');
 
 test('adds 1 + 2 to equal 3', () => {
@@ -34,8 +35,7 @@ test('zero', () => {
 });
 
 // Async
-test('the data is peanut butter', async () => {
-    const response = await fetch('http://localhost:3000/');
-    const data = await response.json();
-    expect(data.message).toBe('Hello, World!');
+test('data message is hello world', async () => {
+    const response = await axios.get('http://localhost:3000/');
+    expect(response.data.message).toBe('Hello, World!');
 });
