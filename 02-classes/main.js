@@ -14,4 +14,5 @@ class Rectangle {
 }
 
 let r = new Rectangle(2, 4);
+
 console.log(`Square is ${r.square()}`);

@@ -1,4 +1,4 @@
-// У слова async один простой смысл: эта функция всегда возвращает промис
+// У слова async один простой смысл: эта функция всегда возвращает промис.
 
 async function calculation(a) {
     return new Promise(function (resolve, reject) {
@@ -14,7 +14,10 @@ calculation(5).then(
 
 /**
  * Ключевое слово await заставит интерпретатор JavaScript ждать до тех пор,
- * пока промис справа от await не выполнится
+ * пока промис справа от await не выполнится.
+ *
+ * Раскомментируйте и выполните код, представленный ниже для иллюстрации
+ * работы async/await.
  */
 
 // async function calculation() {
@@ -28,4 +31,3 @@ calculation(5).then(
 // }
 
 // calculation();
-

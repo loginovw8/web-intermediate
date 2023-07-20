@@ -92,3 +92,9 @@ app.post('/store', (req, res) => {
         }
     );
 });
+
+app.post('/target', (req, res) => {
+    console.log(req.body.message);
+
+    res.redirect('/');
+});

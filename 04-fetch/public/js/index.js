@@ -1,3 +1,14 @@
+/**
+ * fetch() возвращает Promise. Перехват результата запроса производится
+ * с помощью then.
+ *
+ * Обратите внимание, что response.json() также возвращает Promise.
+ * Следовательно, итоговый результат достигается повторным вызовом метода then.
+ */
+
+/**
+ * GET-запрос
+ */
 fetch('/items')
     .then(
         (response) => {
@@ -14,14 +25,15 @@ fetch('/items')
         }
     );
 
-// рекурсия!
-
-// fetch('/items', {
-//     method: 'POST',
-//     headers: {
-//         "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//         message: 'hello'
-//     })
-// })
+/**
+ * POST-запрос с передачей параметров
+ */
+fetch('/target', {
+    method: 'POST',
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        message: 'hello',
+    })
+});
