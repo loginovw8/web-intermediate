@@ -1,10 +1,6 @@
-# ORM
+# ORM. Связи между таблицами базы данных
 
-Set up a new Prisma project
-
-    npx prisma init
-
-Define Prisma schema
+Пример схемы проекта
 
     model Item {
         id          Int       @id @default(autoincrement())
@@ -52,25 +48,3 @@ Define Prisma schema
         @@id([item_id, category_id])
         @@map("item_category")
     }
-
-Create migrations from Prisma schema and apply them to the database
-
-    npx prisma migrate dev 
-
-Generate new migration and apply to the database
-
-    npx prisma migrate dev --name add-description
-
-Delete and recreate the database
-
-    npx prisma migrate reset
-
-Status
-
-    npx prisma migrate status
-
-Apply pending migrations and create the database if it does not exist
-
-    npx prisma migrate deploy
-
-https://github.com/prisma/prisma-examples/blob/latest/javascript/rest-express/src/index.js

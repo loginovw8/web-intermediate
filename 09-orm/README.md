@@ -1,10 +1,20 @@
 # ORM
 
-Set up a new Prisma project
+ORM (Object Relational-Mapping) - технология программирования, которая связывает
+базы данных с концепциями объектно-ориентированных языков программирования,
+создавая «виртуальную объектную базу данных».
+
+## Пример работы с ORM Prisma
+
+Документация ORM Prisma
+
+    https://www.prisma.io/docs
+
+Установка ORM Prisma в проект
 
     npx prisma init
 
-Define Prisma schema
+Определите схему проекта в файле prisma/schema.prisma
 
     model Item {
         id          Int       @id @default(autoincrement())
@@ -16,24 +26,22 @@ Define Prisma schema
         @@map("items")
     }
 
-Create migrations from Prisma schema and apply them to the database
+Создайте миграции БД на основе схемы schema.prisma
 
     npx prisma migrate dev 
 
-Generate new migration and apply to the database
+Создание новой миграции 
 
     npx prisma migrate dev --name add-description
 
-Delete and recreate the database
+Удалить все данные из БД и создать заново
 
     npx prisma migrate reset
 
-Status
+Статус ORM
 
     npx prisma migrate status
 
-Apply pending migrations and create the database if it does not exist
+Применить ожидающие миграции и создать БД если она еще не создана
 
     npx prisma migrate deploy
-
-https://github.com/prisma/prisma-examples/blob/latest/javascript/rest-express/src/index.js

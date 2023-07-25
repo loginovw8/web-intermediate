@@ -1,5 +1,12 @@
-# SASS
+# Хеширование паролей, загрузка файлов на веб-сервер 
 
-https://sass-lang.com/
+## Хеширование
 
-sass resources/sass/style.scss public/css/style.css
+    https://www.kaspersky.ru/blog/the-wonders-of-hashing/3633/
+
+## Загрузка файлов на веб-сервер
+
+В данном уроке приведен пример загрузки файлов на веб-сервер с помощью 
+библиотеки multer.
+
+    https://www.npmjs.com/package/multer
