@@ -6,10 +6,16 @@
  * Следовательно, итоговый результат достигается повторным вызовом метода then.
  */
 
+const select = document.querySelector('select');
+
+select.addEventListener('change', (e) => {
+    console.log(e.target.value);
+});
+
 /**
  * GET-запрос
  */
-fetch('/items')
+fetch('/api/items')
     .then(
         (response) => {
             return response.json();
@@ -28,7 +34,7 @@ fetch('/items')
 /**
  * POST-запрос с передачей параметров
  */
-fetch('/target', {
+fetch('/api/target', {
     method: 'POST',
     headers: {
         "Content-Type": "application/json",
