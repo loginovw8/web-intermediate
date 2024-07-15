@@ -3,6 +3,15 @@
 
 <h1><%= title %></h1>
 
+<h2>Пример обработки POST-запроса</h2>
+
+<form action="/items/message" method="post">
+    <input name="message" type="text" placeholder="Введите сообщение" />
+    <button type="submit">Отправить</button>
+</form>
+
+<br />
+
 <% for (let i = 0; i < items.length; i++) { %>
 
     <div class="section">

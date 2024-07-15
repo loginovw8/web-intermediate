@@ -1,13 +1,14 @@
 import Fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
+import formbody from '@fastify/formbody'
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import ejs from 'ejs';
 import fs from 'fs';
 
 const app = Fastify({
-    logger: true,
+    logger: false,
 });
 
 app.register(fastifyStatic, {
@@ -20,6 +21,8 @@ app.register(fastifyView, {
     },
     root: path.join(dirname(fileURLToPath(import.meta.url)), 'views'),
 });
+
+app.register(formbody);
 
 app.get('/', (req, reply) => {
     reply.view('pages/home');
@@ -50,9 +53,10 @@ app.get('/items/:id/show', (req, reply) => {
     });
 });
 
-try {
-    app.listen({ port: 8080 });
-} catch (err) {
-    app.log.error(err);
-    process.exit(1);
-}
+app.post('/items/message', (req, reply) => {
+    console.log(`Полученное сообщение: ${req.body.message}`);
+
+    reply.redirect('/items');
+});
+
+app.listen({ port: 8080 });
