@@ -1,14 +1,38 @@
-const express = require('express')
-const mysql = require('mysql');
-const path = require('path');
-const app = express();
+import Fastify from 'fastify';
+import fastifyStatic from '@fastify/static';
+import fastifyView from '@fastify/view';
+import formbody from '@fastify/formbody'
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
+import ejs from 'ejs';
+import mysql from 'mysql';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const app = Fastify({
+    logger: false,
+});
+
+app.register(fastifyStatic, {
+    root: path.join(dirname(fileURLToPath(import.meta.url)), 'public'),
+});
+
+app.register(fastifyView, {
+    engine: {
+        ejs: ejs,
+    },
+    root: path.join(dirname(fileURLToPath(import.meta.url)), 'views'),
+});
+
+app.register(formbody);
 
 // Соединение с базой данных
 const connection = mysql.createConnection({
-    host: "127.0.0.1",
-    database: "nature",
-    user: "root",
-    password: "secret"
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD
 });
 
 connection.connect((err) => {
@@ -17,54 +41,43 @@ connection.connect((err) => {
     }
 });
 
-// Путь к директории файлов ресурсов (css, js, images)
-app.use(express.static('public'));
+app.listen({ port: process.env.PORT });
 
-// Настройка шаблонизатора
-app.set('view engine', 'ejs');
+app.get('/', (req, reply) => {
+    reply.view('pages/home');
+});
 
-// Путь к директории файлов отображения контента
-app.set('views', path.join(__dirname, 'views'));
+app.get('/about-us', (req, reply) => {
+    reply.view('pages/about-us');
+});
 
-// Обработка POST-запросов из форм
-app.use(express.urlencoded({ extended: true }));
-
-// Запуск веб-сервера по адресу http://localhost:3000
-app.listen(3000);
-
-/**
- * Маршруты
- */
-app.get('/', (req, res) => {
+app.get('/items', (req, reply) => {
     connection.query("SELECT * FROM items", (err, data, fields) => {
         if (err) {
             console.log(err);
         }
 
-        res.render('home', {
-            'items': data,
+        reply.view('items/index', {
+            title: 'Items',
+            items: data,
         });
     });
 });
 
-app.get('/items/:id', (req, res) => {
+app.get('/items/:id/show', (req, reply) => {
     connection.query("SELECT * FROM items WHERE id=?", [req.params.id],
         (err, data, fields) => {
             if (err) {
                 console.log(err);
             }
 
-            res.render('item', {
-                'item': data[0],
-            })
+            reply.view('items/show', {
+                item: data[0],
+            });
         });
 });
 
-app.get('/add', (req, res) => {
-    res.render('add')
-});
-
-app.post('/store', (req, res) => {
+app.post('/items/store', (req, reply) => {
     connection.query(
         "INSERT INTO items (title, image) VALUES (?, ?)",
         [[req.body.title], [req.body.image]],
@@ -73,7 +86,7 @@ app.post('/store', (req, res) => {
                 console.log(err);
             }
 
-            res.redirect('/');
+            reply.redirect('/items');
         }
     );
 });

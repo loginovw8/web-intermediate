@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
+import formbody from '@fastify/formbody'
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import ejs from 'ejs';
@@ -21,6 +22,8 @@ app.register(fastifyView, {
     root: path.join(dirname(fileURLToPath(import.meta.url)), 'views'),
 });
 
+app.register(formbody);
+
 app.get('/', (req, reply) => {
     reply.view('pages/home');
 });
@@ -38,9 +41,4 @@ app.post('/api/target', (req, reply) => {
     reply.redirect('/');
 });
 
-try {
-    app.listen({ port: 8080 });
-} catch (err) {
-    app.log.error(err);
-    process.exit(1);
-}
+app.listen({ port: 8080 });
