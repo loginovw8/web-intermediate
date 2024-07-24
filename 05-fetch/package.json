@@ -5,6 +5,7 @@
         "@fastify/static": "^7.0.4",
         "@fastify/view": "^9.1.0",
         "ejs": "^3.1.10",
-        "fastify": "^4.28.1"
+       	"fastify": "^4.28.1",
+        "dotenv": "^16.1.4"
     }
 }

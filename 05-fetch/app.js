@@ -6,6 +6,9 @@ import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import ejs from 'ejs';
 import fs from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = Fastify({
     logger: false,
@@ -38,7 +41,7 @@ app.get('/api/items', (req, reply) => {
 app.post('/api/target', (req, reply) => {
     console.log(req.body.message);
 
-    reply.redirect('/');
+    reply.send();
 });
 
-app.listen({ port: 8080 });
+app.listen({ port: process.env.PORT });
