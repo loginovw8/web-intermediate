@@ -1,46 +1,69 @@
-const path = require("path");
-const express = require("express");
-const { PrismaClient } = require('@prisma/client');
+import Fastify from 'fastify';
+import fastifyStatic from '@fastify/static';
+import fastifyView from '@fastify/view';
+import formbody from '@fastify/formbody'
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
+import ejs from 'ejs';
+import dotenv from 'dotenv';
+import { PrismaClient } from '@prisma/client';
+
+dotenv.config();
+
 const prisma = new PrismaClient();
-const app = express();
 
-// Путь к директории файлов ресурсов (css, js, images)
-app.use(express.static("public"));
+const app = Fastify({
+    logger: false,
+});
 
-// Настройка шаблонизатора
-app.set("view engine", "ejs");
+app.register(fastifyStatic, {
+    root: path.join(dirname(fileURLToPath(import.meta.url)), 'public'),
+});
 
-// Путь к директории файлов отображения контента
-app.set("views", path.join(__dirname, "views"));
+app.register(fastifyView, {
+    engine: {
+        ejs: ejs,
+    },
+    root: path.join(dirname(fileURLToPath(import.meta.url)), 'views'),
+});
 
-// Обработка POST-запросов из форм
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.register(formbody);
 
-// Запуск веб-сервера по адресу http://localhost:3000
-app.listen(3000);
+app.listen({ port: process.env.PORT });
 
-/**
- * Маршруты
- */
-app.get("/", async (req, res) => {
-    const items = await prisma.item.findMany({
+app.get('/', (req, reply) => {
+    reply.view('pages/home');
+});
+
+app.get('/about-us', (req, reply) => {
+    reply.view('pages/about-us');
+});
+
+app.get('/items', (req, reply) => {
+    prisma.item.findMany({
         include: {
             location: true,
         }
-    });
+    }).then(result => {
+        const locations = result.map(i => {
+            return {
+                'id': i.location.id,
+                'title': i.location.title,
+            }
+        });
 
-    res.render("home", {
-        items: items,
+        reply.view('items/index', {
+            title: 'Items',
+            items: result,
+            locations: locations,
+        });
     });
 });
 
-app.get("/items/:id", async (req, res) => {
-    const { id } = req.params;
-
-    const item = await prisma.item.findFirst({
+app.get('/items/:id/show', (req, reply) => {
+    prisma.item.findFirst({
         where: {
-            id: Number(id),
+            id: Number(req.params.id),
         },
         include: {
             location: true,
@@ -48,26 +71,27 @@ app.get("/items/:id", async (req, res) => {
                 include: {
                     category: true,
                 }
-            },
+            }
         }
-    });
-
-    res.render("item", {
-        item: (item) ? item : {},
+    }).then(result => {
+        reply.view('items/show', {
+            item: result,
+        });
     });
 });
 
-app.post("/store", async (req, res) => {
-    const { title, image } = req.body;
+app.post('/items/store', (req, reply) => {
+    const { title, image, location } = req.body;
 
-    await prisma.item.create({
+    prisma.item.create({
         data: {
             title,
             image,
+            location_id: Number(location),
         }
+    }).then(() => {
+        reply.redirect('/items');
     });
-
-    res.redirect("/");
 });
 
 app.get('/example-m-n', async (req, res) => {
@@ -79,8 +103,4 @@ app.get('/example-m-n', async (req, res) => {
     });
 
     res.redirect("/");
-});
-
-app.get("/add", (req, res) => {
-    res.render("add");
 });

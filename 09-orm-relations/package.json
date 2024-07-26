@@ -1,11 +1,15 @@
 {
+    "type": "module",
     "dependencies": {
         "@faker-js/faker": "^8.4.1",
+        "@fastify/formbody": "^7.4.0",
+        "@fastify/static": "^7.0.4",
+        "@fastify/view": "^9.1.0",
         "@prisma/client": "^4.16.1",
         "ejs": "^3.1.8",
-        "express": "^4.18.1",
-        "mysql": "^2.18.1",
-        "prisma": "^4.16.1"
+        "fastify": "^4.28.1",
+        "prisma": "^4.16.1",
+        "dotenv": "^16.1.4"
     },
     "prisma": {
         "seed": "node seed.js"

@@ -7,7 +7,8 @@ async function main() {
     for (let i = 0; i < 10; i++) {
         await prisma.item.create({
             data: {
-                name: faker.word.noun(),
+                title: faker.word.noun(),
+                image: `nature${Math.floor(Math.random() * 5 + 1)}.jpeg`,
                 location: {
                     create: {
                         title: faker.location.city(),
@@ -19,7 +20,7 @@ async function main() {
                         {
                             category: {
                                 create: {
-                                    name: faker.word.noun(),
+                                    title: faker.word.noun(),
                                 }
                             }
                         },
