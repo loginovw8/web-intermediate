@@ -1,8 +1,0 @@
-{
-    "devDependencies": {
-        "@faker-js/faker": "^8.0.2"
-    },
-    "prisma": {
-        "seed": "node prisma/seed.js"
-    }
-}

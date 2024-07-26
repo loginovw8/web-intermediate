@@ -48,3 +48,11 @@
         @@id([item_id, category_id])
         @@map("item_category")
     }
+
+## Seeding
+
+Seeding (засеивание) - это процесс заполнения БД набором данных.
+
+Скрипт для выполнения
+
+    npx prisma db seed

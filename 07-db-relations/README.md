@@ -138,7 +138,7 @@ Date
 
     Date
 
-## Foreign Key
+## Внешние ключи Foreign Key 
 
     CREATE TABLE parent (
         id INT NOT NULL,
@@ -155,7 +155,7 @@ Date
             ON DELETE CASCADE
     );
 
-## LEFT JOIN
+## Соединения таблиц Join 
 
     CREATE TABLE items (
         id INT PRIMARY KEY AUTO_INCREMENT,

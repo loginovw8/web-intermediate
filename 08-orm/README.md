@@ -28,9 +28,9 @@ ORM (Object Relational-Mapping) - технология программиров�
 
 Создайте миграции БД на основе схемы schema.prisma
 
-    npx prisma migrate dev 
+    npx prisma migrate dev
 
-Создание новой миграции 
+Создание новой миграции
 
     npx prisma migrate dev --name add-description
 
