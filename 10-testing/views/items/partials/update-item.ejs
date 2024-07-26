@@ -1,0 +1,16 @@
+<h2>Add Location</h2>
+
+<form method="post" action="/items/<%= item.id %>/update">
+    <div class="form-group">
+        <label class="form-group__label" for="image">location</label>
+        <select class="form-group__select" name="location">
+            <% locations.forEach(location => { %>
+
+                <option value="<%= location.id %>"><%= location.title %></option>
+
+            <% }) %>
+        </select>
+    </div>
+
+    <input class="form-button" type="submit" value="Обновить" />
+</form>
